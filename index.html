@@ -1,0 +1,134 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYA MQTT</title>
+    <link rel="shortcut icon" href="https://cdn.shopify.com/s/files/1/0174/2162/products/DYKE_AND_DEAN_BLUE_PORCELAIN_CERAMIC_CALEDO_KATY_PATY_ROUND_WALL_SOCKET_SCHUKO.png?v=1612830291">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<style>
+* {
+    font-size: 15px;
+}
+</style>
+
+<body>
+    <center>
+        <h1 style=" text-shadow: 2px 2px #0988af;">MQTT over web socket</h1>
+    </center>
+
+    <div class="container-fluid">
+        <div class="row justify-content-around">
+            <div class="container-fluid col-lg-4 col-md-12 col-sm-12 mt-4">
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-header bg-info text-white h4">Broker</div>
+                    <div class="card-body" style="background-image: url('https://www.lexiconin.com/wp-content/uploads/2020/08/Background.jpg'); background-repeat: no-repeat; background-size: cover">
+                        <div class="form-group">
+                            <strong>Address: </strong>
+                            <input type="text" class="form-control" id="address" name="address" value="wss://test.mosquitto.org:8081/mqtt">
+                            <br>
+                            <button type="button" class="btn btn-success" id="Cbroker">Connect</button>
+                            <button type="button" class="btn btn-success">Disconnect</button>
+                            <br>
+                            <br>
+                            <strong>Status: </strong>
+                            <input type="text" class="form-control" id="status" name="status" value="Press Connect">
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-header bg-info text-white h5">Incoming Messages</div>
+                    <div class="card-body" style="background-image: url('https://www.lexiconin.com/wp-content/uploads/2020/08/Background.jpg'); background-repeat: no-repeat; background-size: cover">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Topic</th>
+                                    <th scope="col">Payload</th>
+                                    <th scope="col">Time Stamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="IncomingData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid col-lg-4 col-md-12 col-sm-12 mt-4">
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-header bg-info text-white h4">Publish</div>
+                    <div class="card-body" style="background-image: url('https://www.lexiconin.com/wp-content/uploads/2020/08/Background.jpg'); background-repeat: no-repeat; background-size: cover">
+                        <div class="form-group">
+                            <strong>Topic: </strong>
+                            <input type="text" class="form-control" id="pub-topic" name="pub-topic" placeholder="Input Your Topic here:" required>
+                            <br>
+                            <strong>Payload: </strong>
+                            <input type="text" class="form-control" id="pub-payload" name="pub-payload" placeholder="Input Your Payload here:" required>
+                            <br>
+                            <button type="button" class="btn btn-success" id="Pbutton">Publish</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-header bg-info text-white h5">Publish Messages</div>
+                    <div class="card-body" style="background-image: url('https://www.lexiconin.com/wp-content/uploads/2020/08/Background.jpg'); background-repeat: no-repeat; background-size: cover">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Topic</th>
+                                    <th>Payload</th>
+                                    <th>Time Stamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="PublishData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid col-lg-4 col-md-12 col-sm-12 mt-4">
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-header bg-info text-white h4">Subscribe</div>
+                    <div class="card-body" style="background-image: url('https://www.lexiconin.com/wp-content/uploads/2020/08/Background.jpg'); background-repeat: no-repeat; background-size: cover">
+                        <div class="form-group">
+                            <strong>Topic: </strong>
+                            <input type="text" class="form-control" id="sub-topic" name="sub-topic" placeholder="Input Your Topic here:" required>
+                            <br>
+                            <button type="button" class="btn btn-success" id="Sbutton">Subscribe</button>
+                            <button type="button" class="btn btn-success">Unsubscribe</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-header bg-info text-white h5">Subcribed Messages</div>
+                    <div class="card-body"style="background-image: url('https://www.lexiconin.com/wp-content/uploads/2020/08/Background.jpg'); background-repeat: no-repeat; background-size: cover">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Topic</th>
+                                    <th scope="col">Time Stamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="SubscribedData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+<script src="./browserMqtt.js"></script>
+<script src="./index.js"></script>
+
+</html>
